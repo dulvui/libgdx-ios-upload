@@ -1,0 +1,64 @@
+
+name: 'libGDX iOS Release'
+description: 'libGDX: Build iOS app and upload to Testflight'
+author: 'Simon Dalvai @dulvui'
+branding:
+  color: red
+  icon: upload-cloud
+
+inputs:
+  working-directory:
+    description: 'The working directory'
+    required: false
+    default: '.'
+  godot-version:
+    description: 'libGDX version'
+    required: false
+    default: '1.11.0'
+  project-name:
+    description: 'Project name used for xarchive building'
+    required: true
+  provision-profile-path:
+    description: 'Path of a valid provision profile file'
+    required: true
+  apple-id-password:
+    description: 'Apple ID password'
+    required: true
+  apple-id-username:
+    description: 'Apple ID username'
+    required: true
+  
+runs:
+  using: "composite"
+  steps:
+    - name: Check is running on mac-os
+      if: runner.os != 'macos'
+      shell: bash
+      run: exit 1
+
+    - name: Extract Provisioning profile UUID and create PP_UUID env variable
+      shell: bash
+      run: echo "PP_UUID=$(grep -a -A 1 'UUID' ${{ inputs.provision-profile-path }} | grep string | sed -e "s|<string>||" -e "s|</string>||" | tr -d '\t')" >> $GITHUB_ENV
+
+    - name: Force XCode 13.4
+      shell: bash
+      run: sudo xcode-select -switch /Applications/Xcode_13.4.app
+
+    - name: Build the libGDX application
+      shell: bash
+      run: ./gradlew -Probovm.archs=thumbv7:arm64 robovmArchive
+ 
+    - name: Publish the App on TestFlight
+      shell: bash
+      if: success()
+      env:
+        APPLEID_USERNAME: ${{ inputs.apple-id-username }}
+        APPLEID_PASSWORD: ${{ inputs.apple-id-password }}
+      run: |
+        xcrun altool \
+          --upload-app \
+          -t ios \
+          -f $PWD/build/*.ipa \
+          -u "${{ inputs.apple-id-username }}" \
+          -p "${{ inputs.apple-id-password }}" \
+          --verbose
