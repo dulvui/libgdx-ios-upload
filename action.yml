@@ -46,7 +46,7 @@ runs:
 
     - name: Build the libGDX application
       shell: bash
-      run: ./gradlew -Probovm.archs=thumbv7:arm64 robovmArchive
+      run: ./gradlew ios:createIPA
  
     - name: Publish the App on TestFlight
       shell: bash
@@ -58,7 +58,7 @@ runs:
         xcrun altool \
           --upload-app \
           -t ios \
-          -f $PWD/build/*.ipa \
+          -f *.ipa \
           -u "${{ inputs.apple-id-username }}" \
           -p "${{ inputs.apple-id-password }}" \
           --verbose
