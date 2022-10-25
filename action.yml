@@ -11,10 +11,6 @@ inputs:
     description: 'The working directory'
     required: false
     default: '.'
-  godot-version:
-    description: 'libGDX version'
-    required: false
-    default: '1.11.0'
   project-name:
     description: 'Project name used for xarchive building'
     required: true
