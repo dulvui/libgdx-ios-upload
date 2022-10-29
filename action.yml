@@ -23,6 +23,10 @@ inputs:
   apple-id-username:
     description: 'Apple ID username'
     required: true
+  ipa-export-path:
+    description: 'The path where the ipa will be exported'
+    required: false
+    default: 'ios/build/robovm/*.ipa'
   
 runs:
   using: "composite"
@@ -32,13 +36,9 @@ runs:
       shell: bash
       run: exit 1
 
-    - name: Extract Provisioning profile UUID and create PP_UUID env variable
+    - name: Create robovm ram disk to speed up build
       shell: bash
-      run: echo "PP_UUID=$(grep -a -A 1 'UUID' ${{ inputs.provision-profile-path }} | grep string | sed -e "s|<string>||" -e "s|</string>||" | tr -d '\t')" >> $GITHUB_ENV
-
-    - name: Force XCode 13.4
-      shell: bash
-      run: sudo xcode-select -switch /Applications/Xcode_13.4.app
+      run: SIZE=2048 ; diskutil erasevolume HFS+ 'RoboVM RAM Disk' `hdiutil attach -nomount ram://$((SIZE * 2048))`
 
     - name: Build the libGDX application
       shell: bash
@@ -54,7 +54,7 @@ runs:
         xcrun altool \
           --upload-app \
           -t ios \
-          -f *.ipa \
+          -f ${{ inputs.ipa-export-path }} \
           -u "${{ inputs.apple-id-username }}" \
           -p "${{ inputs.apple-id-password }}" \
           --verbose
