@@ -11,22 +11,12 @@ inputs:
     description: 'The working directory'
     required: false
     default: '.'
-  project-name:
-    description: 'Project name used for xarchive building'
-    required: true
-  provision-profile-path:
-    description: 'Path of a valid provision profile file'
-    required: true
   apple-id-password:
     description: 'Apple ID password'
     required: true
   apple-id-username:
     description: 'Apple ID username'
     required: true
-  ipa-export-path:
-    description: 'The path where the ipa will be exported'
-    required: false
-    default: 'ios/build/robovm/*.ipa'
   
 runs:
   using: "composite"
