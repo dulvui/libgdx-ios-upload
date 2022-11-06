@@ -11,6 +11,10 @@ inputs:
     description: 'The working directory'
     required: false
     default: '.'
+  ipa-export-path:
+    description: 'The path where the ipa will be exported'
+    required: false
+    default: 'ios/build/robovm/*.ipa'
   apple-id-password:
     description: 'Apple ID password'
     required: true
