@@ -1,5 +1,5 @@
 
-name: 'libGDX iOS Release'
+name: 'libGDX iOS Upload'
 description: 'libGDX: Build iOS app and upload to Testflight'
 author: 'Simon Dalvai @dulvui'
 branding:
