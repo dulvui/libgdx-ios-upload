@@ -1,9 +1,9 @@
-# libgdx-ios-release
-Github Action to release an iOS libGDX application to Testflight.  
+# libgdx-ios-upload
+Github Action to upload an iOS libGDX application to Testflight.  
 If you are facing problems with the action or this README feels uncomplete, pull requests are welcome or open an issue.
 
 ## Table of contents
-- [libgdx-ios-release](#libgdx-ios-release)
+- [libgdx-ios-upload](#libgdx-ios-upload)
   - [Table of contents](#table-of-contents)
   - [Requirements](#requirements)
   - [Parameters](#parameters)
@@ -25,7 +25,7 @@ Note: Its recommended to create a Apple Developer service account to use a separ
 
 ## Working examples
 You an find a working examples here:  
-https://github.com/dulvui/sn4ke/blob/main/.github/workflows/release-ios.yml
+https://github.com/dulvui/sn4ke/blob/main/.github/workflows/upload-ios.yml
 
 ## License
 This software is licensed under the [MIT license](LICENSE).
