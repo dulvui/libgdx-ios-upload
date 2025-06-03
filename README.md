@@ -1,3 +1,7 @@
+# ARCHIVED
+This action has been archived and will no longer be maintained.
+Please create your own fork.
+
 # libgdx-ios-upload
 Github Action to upload an iOS libGDX application to Testflight.  
 If you are facing problems with the action or this README feels uncomplete, pull requests are welcome or open an issue.
